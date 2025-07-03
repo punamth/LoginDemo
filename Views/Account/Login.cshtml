@@ -1,27 +1,37 @@
-﻿@model LoginApp.Models.LoginViewModel
+﻿@model LoginApp.Models.AuthViewModel
 
 <h2>Login</h2>
 
 <form asp-action="Login" method="post">
-    <div>
-        <label>Username</label>
-        <input asp-for="Username" />
-        <span asp-validation-for="Username" style="color:red"></span>
+    <div class="form-group mb-3">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" placeholder="Enter your username" />
+        <span asp-validation-for="Username" class="text-danger"></span>
     </div>
 
-    <div>
-        <label>Password</label>
-        <input asp-for="Password" type="password" />
-        <span asp-validation-for="Password" style="color:red"></span>
+    <div class="form-group mb-3">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
-    <div style="color:red">@ViewBag.Error</div>
-
-    <button type="submit">Login</button>
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+<p class="mt-3">
+    Don't have an account?
+    <a asp-controller="Account" asp-action="Register">Register here</a>
+</p>
+
+@if (ViewBag.Token != null)
+{
+    <div class="alert alert-success mt-3">
+        <strong>JWT Token:</strong>
+        <pre>@ViewBag.Token</pre>
+    </div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-3">@ViewBag.Error</div>
 }
